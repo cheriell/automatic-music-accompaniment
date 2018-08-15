@@ -34,7 +34,7 @@ embedding_size = 16
 hidden_size = 64
 num_epochs = 1000
 
-train_data_path = 'data\\final_train'
+train_data_path = 'data\\train'
 valid_data_path = 'data\\validation'
 experiment_path = 'experiment\\'
 
