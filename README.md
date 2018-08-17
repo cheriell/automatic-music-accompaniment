@@ -30,17 +30,21 @@ Please make sure that all the midis you add in your dataset have two music parts
 
 Next, run _load_data_to_files.py_, this will encode the midis into data representations in _.npy_ format. The encoded musics will be monophonic and only contains two music parts.
 
-After that, please create the following folders under _code_ folder:    
---_data_    
-|---_train_    
-|---_validation_   
+After that, please create the following folders under _code_ folder:
+
+        --_data_
+        |---_train_
+        |---_validation_
+        
 Run file _divide_train_validation.py_, this will copy the encoded _.npy_ files into training and validation sets.
 
 Add an _experiment_ folder under _code_, and use _train.py_ to train the complex model or _simple_model.py_ to train the simple model. The model training results will be saved in the created _experiment_ folder including models at the end of each epoch and figures for the losses and accuracies.
 
 You can use _generate.py_ to generate music accompaniments. Run the file with command line options:   
-_midifile.mid --model_file  model.hdf5 --diversity div_    
-The diversity is in float format, and will be used in sampling notes in generating accompaniments. If you are using the provided model files _final_model.hdf5_ or _final_model2.hdf5_, the suggesting diversity is around 0.8. And if you are using _simple_model.hdf5_, you can try diversity around 0.6.
+
+        _midifile.mid --model_file  model.hdf5 --diversity div_
+
+The diversity is in float format, and will be used in sampling notes in generating accompaniments. If you are using the provided models  _final_model.hdf5_ or _final_model2.hdf5_, the suggesting diversity is around 0.8. And if you are using _simple_model.hdf5_, you can try diversity around 0.6.
 
 
 
