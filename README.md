@@ -31,7 +31,7 @@ Please make sure that all the midis you add in your dataset has two music parts.
 Next, run _load_data_to_files.py_, this will encode the midis into data representations in _.npy_ format. The encoded musics will be monophonic and only contains two music parts.
 
 After that, please create the following folders under _code_ folder:    
-_data_    
+-_data_    
 |---_train_    
 |---_validation_   
 Run file _divide_train_validation.py_, this will copy the encoded _.npy_ files into training and validation sets.
