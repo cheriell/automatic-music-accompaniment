@@ -32,9 +32,9 @@ Next, run _load_data_to_files.py_, this will encode the midis into data represen
 
 After that, please create the following folders under _code_ folder:
 
-        --_data_
-        |---_train_
-        |---_validation_
+        data
+        |---train
+        |---validation
         
 Run file _divide_train_validation.py_, this will copy the encoded _.npy_ files into training and validation sets.
 
@@ -42,7 +42,7 @@ Add an _experiment_ folder under _code_, and use _train.py_ to train the complex
 
 You can use _generate.py_ to generate music accompaniments. Run the file with command line options:   
 
-        _midifile.mid --model_file  model.hdf5 --diversity div_
+        midifile.mid --model_file  model.hdf5 --diversity div
 
 The diversity is in float format, and will be used in sampling notes in generating accompaniments. If you are using the provided models  _final_model.hdf5_ or _final_model2.hdf5_, the suggesting diversity is around 0.8. And if you are using _simple_model.hdf5_, you can try diversity around 0.6.
 
