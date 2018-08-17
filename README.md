@@ -46,7 +46,7 @@ You can use **_generate.py_** to generate music accompaniments. Run the file wit
 
         midifile.mid --model_file  model.hdf5 --diversity div
 
-The diversity is in float format, and will be used in sampling notes in generating accompaniments. If you are using the provided models  _final_model.hdf5_ or _final_model2.hdf5_, the suggesting diversity is around 0.8. And if you are using _simple_model.hdf5_, you can try diversity around 0.6.
+The diversity is in float format, and will be used in sampling notes in generating accompaniments. If you are using the provided models  _final_model.hdf5_ or _final_model2.hdf5_, the suggesting diversity is around 0.7. And if you are using _simple_model.hdf5_, you can try diversity around 0.5.
 
 
 
