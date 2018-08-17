@@ -21,7 +21,7 @@ You would need ...... free memory for model training.
 ## File description
 In the root folder, there are three trained model files _final_model.hdf5_, _final_model2.hdf5_, and _simple_model.hdf5_. The first two are models trained on a network with two LSTM and two dense layers, while the last one is trained on a simple network with one LSTM layer and one dense layer. Only classical music pieces are used in the training dataset of the three models, so the models would work best for predicting classical music.
 
-The python codes are in _code_ folder, and some of the generated music pieces are provided in folder _generated music segments_. The scores of the generated midi files is provided in _pdf_s.
+The python codes are in _code_ folder, and some of the generated music pieces are provided in folder _generated music segments_. The scores of the generated midi files is provided in pdfs.
 
 ## Running instructions
 To use the code provided, please first save your midi dataset in a _midis_ folder in the following path format:
