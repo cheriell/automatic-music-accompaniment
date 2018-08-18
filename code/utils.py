@@ -98,6 +98,41 @@ def load_data(midi_file):
     return data
 
 
+def load_melody_data(midi_file):
+    # return data format: [inst, t, pitch]
+    # return dimension: [INSTRUMENT, number_of_ts, NUMBER_FEATURES]
+    
+    print('----load melody data from midifile: ' + midi_file)
+    
+    midi_data = pretty_midi.PrettyMIDI(midi_file)
+    
+    end_time = midi_data.get_end_time()
+    number_of_ts = time_to_t(midi_data, end_time)
+    
+    data = np.zeros((INSTRUMENTS, number_of_ts, NUMBER_FEATURES), dtype=np.bool)
+    data[:, :, NUMBER_FEATURES - 2] = 1 # rest
+    for t in range(number_of_ts):
+        if t % 4 == 0:
+            data[:, t, NUMBER_FEATURES - 1] = 1 # beat_start
+            
+    # encode melody
+    onsets = []
+    for note in midi_data.instruments[0].notes:
+        start_t = time_to_t(midi_data, note.start)
+        end_t = time_to_t(midi_data, note.end)
+        if start_t < end_t:
+            pitch = note.pitch
+            data[0, start_t, pitch] = 1 # midi_note noset
+            data[0, start_t + 1 : end_t, NUMBER_FEATURES - 3] = 1 # sustain
+            data[0, start_t : end_t, NUMBER_FEATURES - 2] = 0 # rest
+            onsets.append(start_t)
+                
+    for onset in onsets:
+        data[0, onset, NUMBER_FEATURES - 3] = 0 # not sustain
+            
+    return data
+
+
 def to_monophonic(data):
     # return data format: [inst, t, pitch]
     # return dimension: [INSTRUMENT, number_of_ts, NUMBER_FEATURES]

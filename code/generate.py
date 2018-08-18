@@ -29,7 +29,7 @@ model_file = args.model_file
 diversity = args.diversity
 
 model = load_model(model_file)
-test_data_raw = utils.load_data(midi_file)
+test_data_raw = utils.load_melody_data(midi_file)
 utils.to_monophonic(test_data_raw)
 test_data = utils.to_octave(test_data_raw)
 
@@ -66,5 +66,5 @@ data_new = np.copy(test_data_raw)
 data_new[1, :, :] = data[1, :, :]
 
 utils.print_data(data_new)
-utils.generate_midi(data_new, 'generate\\generate-' + midi_file[:len(midi_file)-4] + '-' + model_file[:len(model_file)-5] + '-{}.mid'.format(diversity))
+utils.generate_midi(data_new, midi_file[:len(midi_file)-4] + '-generate-' + model_file[:len(model_file)-5] + '-{}.mid'.format(diversity))
 
