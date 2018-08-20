@@ -16,7 +16,7 @@ This project uses **python 3.6**. Python package <a href="https://github.com/cra
 > <a href="https://github.com/numpy/numpy">numpy</a> for array functions     
 > <a href="https://github.com/matplotlib/matplotlib">matplotlib</a> for ploting figures during model training
 
-You would need ...... free memory for model training.
+You would need 3146MB free GPU memory for model training.
 
 ## File description
 In the root folder, there are three trained model files _final_model.hdf5_, _final_model2.hdf5_, and _simple_model.hdf5_. The first two are models trained on a network with two LSTM and two dense layers, while the last one is trained on a simple network with one LSTM layer and one dense layer. Only classical music pieces are used in the training dataset of the three models, so the models would work best for predicting classical music.
