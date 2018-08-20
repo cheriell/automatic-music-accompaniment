@@ -36,7 +36,8 @@ test_data = utils.to_octave(test_data_raw)
 
 def sample(prediction, diversity=0.6):
     # sample a note from the probability distribution
-    # this function is copied from keras lstm examples
+    # This helper function is copied from keras lstm examples at:
+    # https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py
     prediction = np.asarray(prediction).astype('float64')
     prediction = np.log(prediction) / diversity
     prediction_exp = np.exp(prediction)
