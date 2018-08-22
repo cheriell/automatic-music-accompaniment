@@ -3,18 +3,21 @@
 Created on Sun Jul 15 11:19:13 2018
 
 @author: fj123
+@description: helper functions used for encoding data representations and loading files~
+pretty_midi is used to deal with midi files. ^.^
 """
 
 import numpy as np
 import os, sys
 import pretty_midi
 
+# constant definition!
 NUMBER_FEATURES_OCTAVE = 15 # 12 midi_notes + sustain + rest + beat_start
 NUMBER_FEATURES = 131 # 128 midi_notes + sustain + rest + beat_start
 INSTRUMENTS = 2 # number of instruments in midifile
 T_PER_BEAT = 4
 
-
+# convert t (four t per beat) into time in seconds for generating new midi file.
 def t_to_time(midi_data, t):
     # t is the index of the data in length (T_PER_BEAT for t per beat)
     # for generating new midi file
@@ -24,7 +27,7 @@ def t_to_time(midi_data, t):
     
     return time
 
-
+# convert time in a music piece into t (four t per beat)
 def time_to_t(midi_data, time):
     # get t (T_PER_BEAT for t per beat) according to time
     beats = midi_data.get_beats()
@@ -34,9 +37,9 @@ def time_to_t(midi_data, time):
     
     return int(t)
 
-
+# get all the sub file paths in the provided data_path
 def get_file_paths(data_path):
-    
+    # used to get file paths e.g. midis\\composers
     try:
         midi_files = [os.path.join(data_path, path) \
                       for path in os.listdir(data_path) \
@@ -48,7 +51,7 @@ def get_file_paths(data_path):
     
     return midi_files
 
-
+# get the the data paths for .npy files.
 def get_data_paths(data_path):
     
     try:
@@ -62,7 +65,8 @@ def get_data_paths(data_path):
     
     return data_files
 
-
+# encode music in midi file into a first version of data representation
+# that contains polyphonic notes and include 128 pitchs
 def load_data(midi_file):
     # return data format: [inst, t, pitch]
     # return dimension: [INSTRUMENT, number_of_ts, NUMBER_FEATURES]
@@ -97,7 +101,8 @@ def load_data(midi_file):
             
     return data
 
-
+# encode only the melody part of the provided midi file into a first version of 
+# data representation that is polyphonic and contains 128 midi pitchs.
 def load_melody_data(midi_file):
     # return data format: [inst, t, pitch]
     # return dimension: [INSTRUMENT, number_of_ts, NUMBER_FEATURES]
@@ -132,7 +137,8 @@ def load_melody_data(midi_file):
             
     return data
 
-
+# transform the encoded first version of data representation into monophonic
+# music for each its instrument
 def to_monophonic(data):
     # return data format: [inst, t, pitch]
     # return dimension: [INSTRUMENT, number_of_ts, NUMBER_FEATURES]
@@ -152,7 +158,7 @@ def to_monophonic(data):
             if p != -1:
                 data[inst, t, :p] = 0
 
-
+# wrap the monophonic data representation into one octave
 def to_octave(data_raw):
     # return data format: [inst, t, pitch]
     # return dimension: [INSTRUMENT, number_of_ts, NUMBER_FEATURES_OCTAVE]
@@ -172,7 +178,9 @@ def to_octave(data_raw):
             
     return data
 
-
+# move the data representation that is wrapped within one octave 
+# to 5 (for melody) and 4 (for accompaniment) higher, return a datad representation
+# in full piano roll
 def reverse_octave(data_octave):
     # return data format: [inst, t, pitch]
     # return dimension: [INSTRUMENT, number_of_ts, NUMBER_FEATURES]
@@ -195,7 +203,7 @@ def reverse_octave(data_octave):
     
     return data
 
-
+# helper function used to shift the notes, used for data augmentation =v=
 def shift(data):
     # use it for data augmentation, shift the octave data by one semitone
     number_of_ts = len(data[0])
@@ -206,10 +214,10 @@ def shift(data):
     data[:, :, :11] = data[:, :, 1:12]
     data[:, :, 11] = line[:, :, 0]
     
-
+    
+# load all the data that converted into monophonic and within one octave
+# in the given midi_files...
 def load_data_all(data_path):
-    # load all the data that converted into monophonic and within one octave
-    # in the given midi_files...
     # return data shape:
     # (number_of_files)(INSTRUMENTS, number_of_ts_in_midi, NUMBER_FEATRUES_OCTAVE)
     
@@ -229,9 +237,9 @@ def load_data_all(data_path):
     return data
 
 
+# reload all the data that preloaded in monophonic and within one octave
+# in the given path in format .npy
 def reload_data_all(data_path):
-    # reload all the data that preloaded in monophonic and within one octave
-    # in the given path in format .npy
     # return data shape:
     # (number_of_files)(INSTRUMENTS, number_of_ts_in_midi, NUMBER_FEATURES_OCTAVE)
     
@@ -252,6 +260,7 @@ def reload_data_all(data_path):
     return data
         
 
+# print the encoded data representation in command line
 def print_data(data):
     
     print('*' * 33)
@@ -283,8 +292,8 @@ def print_data(data):
         print()
 
 
+# generate midi file from data and save generated midi into midi file.
 def generate_midi(data, filename):
-    # generate midi file from data.
     print('*' * 33)
     print('generate midi...')
     
