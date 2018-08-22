@@ -3,6 +3,9 @@
 Created on Sun Jul 15 11:16:10 2018
 
 @author: fj123
+@description: this script is for training the simple model with one LSTM layer and one dense layer.
+the model is used in the user study. mechanisms such as dropout and learning rate decay are not used
+in this model. other parameters are set to be the same as in the model in train.py
 """
 
 import os
@@ -17,7 +20,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import utils
 
-
+# define constants
 NUMBER_FEATURES_OCTAVE = utils.NUMBER_FEATURES_OCTAVE # 12 midi_notes + sustain + rest + beat_start
 NUMBER_FEATURES = utils.NUMBER_FEATURES # 128 midi_notes + sustain + rest + beat_start
 INSTRUMENTS = utils.INSTRUMENTS # number of instruments in midifile
@@ -31,15 +34,18 @@ vocabulary = 14
 hidden_size = 64
 num_epochs = 1000
 
+# define paths for the training and validation set, and the experiment 
+# path to be used in the training process for saving graphs, loss, accuracies and models.
 train_data_path = 'data\\train'
 valid_data_path = 'data\\validation'
 experiment_path = 'simple_model\\'
 
-
+# load data from the pre-processed .npy data files.
 train_data = utils.reload_data_all(train_data_path)
 valid_data = utils.reload_data_all(valid_data_path)
 
 
+# this is the batch generator for creating batches of training data during model training.
 class KerasBatchGenerator(object):
     
     ###########################################################################
@@ -55,8 +61,8 @@ class KerasBatchGenerator(object):
     #   steps to skip when generate the training samples
     ###########################################################################
     
+    # constructor, save the variables through out
     def __init__(self, data, num_steps, batch_size, vocabulary, skip_step=3):
-        
         self.data = data
         self.num_steps = num_steps
         self.batch_size = batch_size
